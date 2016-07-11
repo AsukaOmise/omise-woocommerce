@@ -15,7 +15,7 @@ function register_omise_wc_gateway_plugin() {
 				$this->id               = 'omise';
 				$this->method_title     = "Omise";
 				$this->has_fields       = true;
-				
+
 				// call base functions required for WooCommerce gateway
 				$this->init_form_fields();
 				$this->init_settings();
@@ -44,68 +44,68 @@ function register_omise_wc_gateway_plugin() {
 			function init_form_fields() {
 				$this->form_fields = array(
 					'enabled' => array(
-						'title'       => __( 'Enable/Disable', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Enable/Disable' ),
 						'type'        => 'checkbox',
-						'label'       => __( 'Enable Omise Payment Module.', $this->gateway_name ),
+						'label'       => Omise_Util::translate( 'Enable Omise Payment Module.' ),
 						'default'     => 'no'
 					),
 					'sandbox' => array(
-						'title'       => __( 'Sandbox', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Sandbox' ),
 						'type'        => 'checkbox',
-						'label'       => __( 'Sandbox mode means everything is in TEST mode', $this->gateway_name ),
+						'label'       => Omise_Util::translate( 'Enabling sandbox means that all your transactions will be in TEST mode.' ),
 						'default'     => 'yes'
 					),
 					'test_public_key' => array(
-						'title'       => __( 'Public key for test', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Public key for test' ),
 						'type'        => 'text',
-						'description' => __( 'The "Test" mode public key which can be found in Omise Dashboard' )
+						'description' => Omise_Util::translate( 'The "Test" mode public key can be found in Omise Dashboard.' )
 					),
 					'test_private_key' => array(
-						'title'       => __( 'Secret key for test', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Secret key for test' ),
 						'type'        => 'password',
-						'description' => __( 'The "Test" mode secret key which can be found in Omise Dashboard' )
+						'description' => Omise_Util::translate( 'The "Test" mode secret key can be found in Omise Dashboard.' )
 					),
 					'live_public_key' => array(
-						'title'       => __( 'Public key for live', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Public key for live' ),
 						'type'        => 'text',
-						'description' => __( 'The "Live" mode public key which can be found in Omise Dashboard' )
+						'description' => Omise_Util::translate( 'The "Live" mode public key can be found in Omise Dashboard.' )
 					),
 					'live_private_key' => array(
-						'title'       => __( 'Secret key for live', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Secret key for live' ),
 						'type'        => 'password',
-						'description' => __( 'The "Live" mode secret key which can be found in Omise Dashboard' )
+						'description' => Omise_Util::translate( 'The "Live" mode secret key can be found in Omise Dashboard.' )
 					),
 					'advanced' => array(
-						'title'       => __( 'Advanced options', 'woocommerce' ),
+						'title'       => Omise_Util::translate( 'Advance Settings' ),
 						'type'        => 'title',
 						'description' => '',
 					),
 					'title' => array(
-						'title'       => __( 'Title:', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Title', 'Setting title' ),
 						'type'        => 'text',
-						'description' => __( 'This controls the title which the user sees during checkout.', $this->gateway_name ),
-						'default'     => __( 'Omise Payment Gateway', $this->gateway_name )
+						'description' => Omise_Util::translate( 'This controls the title which the user sees during checkout.' ),
+						'default'     => Omise_Util::translate( 'Omise Payment Gateway', 'Default title' )
 					),
 					'payment_action' => array(
-						'title'       => __( 'Payment Action', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Payment action' ),
 						'type'        => 'select',
-						'description' => __( 'Manual Capture or Capture Automatically', $this->gateway_name ),
+						'description' => Omise_Util::translate( 'Manual Capture or Capture Automatically' ),
 						'default'     => 'auto_capture',
 						'class'       => 'wc-enhanced-select',
 						'options'     => $this->form_field_payment_actions(),
 						'desc_tip'    => true
 					),
 					'omise_3ds' => array(
-						'title'       => __( '3DSecure Support', $this->gateway_name ),
+						'title'       => Omise_Util::translate( '3-D Secure support' ),
 						'type'        => 'checkbox',
-						'label'       => __( 'Enables 3DSecure on this account (does not support for Japan account)', $this->gateway_name ),
+						'label'       => Omise_Util::translate( 'Enable or disable 3-D Secure for the account. (Japan-based accounts are not eligible for the service.)' ),
 						'default'     => 'no'
 					),
 					'description' => array(
-						'title'       => __( 'Description:', $this->gateway_name ),
+						'title'       => Omise_Util::translate( 'Description', 'Setting description' ),
 						'type'        => 'textarea',
-						'description' => __( 'This controls the description which the user sees during checkout.', $this->gateway_name ),
-						'default'     => __( 'Omise payment gateway.', $this->gateway_name )
+						'description' => Omise_Util::translate( 'This controls the description which the user sees during checkout.' ),
+						'default'     => Omise_Util::translate( 'Omise payment gateway.', 'Default description' )
 					)
 				);
 			}
@@ -115,8 +115,8 @@ function register_omise_wc_gateway_plugin() {
 			 * @see WC_Settings_API::admin_options()
 			 */
 			public function admin_options() {
-				echo '<h3>' . __( 'Omise Payment Gateway', $this->gateway_name ) . '</h3>';
-				echo '<p>' . __( 'Omise payment gateway. The first PCI 3.0 certified payment gateway in Thailand' ) . '</p>';
+				echo '<h3>' . Omise_Util::translate( 'Omise Payment Gateway', 'Header at setting page' ) . '</h3>';
+				echo '<p>' . Omise_Util::translate( 'Omise payment gateway, the first PCI 3.0 certified payment gateway in Thailand.' ) . '</p>';
 				echo '<table class="form-table">';
 				$this->generate_settings_html();
 				echo '</table>';
@@ -144,7 +144,7 @@ function register_omise_wc_gateway_plugin() {
 
 			/**
 			 * Process payment
-			 * 
+			 *
 			 * @see WC_Payment_Gateway::process_payment()
 			 */
 			public function process_payment( $order_id ) {
@@ -154,10 +154,10 @@ function register_omise_wc_gateway_plugin() {
 				$token   = isset( $_POST['omise_token'] ) ? wc_clean( $_POST['omise_token'] ) : '';
 				$card_id = isset( $_POST['card_id'] ) ? wc_clean( $_POST['card_id'] ) : '';
 				try {
-					$order->add_order_note( "Starting to process payment with Omise" );
+					$order->add_order_note( Omise_Util::translate( 'Starting to process payment with Omise' ) );
 
 					if ( empty( $token ) && empty( $card_id ) ) {
-						throw new Exception( "Please select a card or enter new payment information." );
+						throw new Exception( Omise_Util::translate( 'Please select a card or enter new payment information.' ) );
 					}
 
 					$user              = $order->get_user();
@@ -165,7 +165,7 @@ function register_omise_wc_gateway_plugin() {
 
 					if ( isset( $_POST['omise_save_customer_card'] ) && empty( $card_id ) ) {
 						if ( empty( $token ) ) {
-							throw new Exception( "Omise card token is required." );
+							throw new Exception( Omise_Util::translate( 'Omise card token is required.' ) );
 						}
 
 						if ( ! empty( $omise_customer_id ) ) {
@@ -191,14 +191,14 @@ function register_omise_wc_gateway_plugin() {
 							}
 
 							$omise_customer_id = $omise_customer->id;
-							if( $this->sandbox ) {
+							if ( $this->sandbox ) {
 								update_user_meta( $user->ID, 'test_omise_customer_id', $omise_customer_id );
-							}else{
+							} else {
 								update_user_meta( $user->ID, 'live_omise_customer_id', $omise_customer_id );
 							}
 
 							if ( 0 == sizeof( $omise_customer->cards->data ) ) {
-								throw new Exception( "Something wrong with Omise gateway. No card available for creating a charge." );
+								throw new Exception( Omise_Util::translate( 'Something wrong with Omise gateway. No card available for creating a charge.' ) );
 							}
 							$card    = $omise_customer->cards->data [0]; //use the latest card
 							$card_id = $card->id;
@@ -218,7 +218,7 @@ function register_omise_wc_gateway_plugin() {
 						"description" => "WooCommerce Order id " . $order_id,
 						"return_uri"  => add_query_arg( 'order_id', $order_id, site_url() . "?wc-api=wc_gateway_omise" )
 					);
-					
+
 					if ( ! empty( $card_id ) && ! empty( $omise_customer_id ) ) {
 						// create charge with a specific card of customer
 						$data["customer"] = $omise_customer_id;
@@ -226,7 +226,7 @@ function register_omise_wc_gateway_plugin() {
 					} else if ( ! empty( $token ) ) {
 						$data["card"] = $token;
 					} else {
-						throw new Exception ( "Please select a card or enter new payment information." );
+						throw new Exception ( Omise_Util::translate( 'Please select a card or enter new payment information.' ) );
 					}
 
 					// Set capture status (otherwise, use API's default behaviour)
@@ -238,7 +238,7 @@ function register_omise_wc_gateway_plugin() {
 
 					$charge = OmiseCharge::create( $data, '', $this->private_key );
 					if ( ! Omise_Charge::is_charge_object( $charge ) )
-						throw new Exception( "Charge was failed, please contact our support" );
+						throw new Exception( Omise_Util::translate( 'Charge was failed, please contact our support' ) );
 
 					// Register new post
 					$this->register_omise_charge_post( $charge, $order, $order_id );
@@ -247,7 +247,7 @@ function register_omise_wc_gateway_plugin() {
 						throw new Exception( Omise_Charge::get_error_message( $charge ) );
 
 					if ( $this->omise_3ds ) {
-						$order->add_order_note( "Processing payment with Omise 3D-Secure" );
+						$order->add_order_note( Omise_Util::translate( 'Processing payment with Omise 3D-Secure' ) );
 						return array (
 							'result'   => 'success',
 							'redirect' => $charge['authorize_uri'],
@@ -257,7 +257,7 @@ function register_omise_wc_gateway_plugin() {
 							case 'MANUAL_CAPTURE':
 								$success = Omise_Charge::is_authorized( $charge );
 								if ( $success ) {
-									$order->add_order_note( "Authorize with Omise successful" );
+									$order->add_order_note( Omise_Util::translate( 'Authorize with Omise successful' ) );
 								}
 
 								break;
@@ -266,7 +266,7 @@ function register_omise_wc_gateway_plugin() {
 								$success = Omise_Charge::is_paid( $charge );
 								if ( $success ) {
 									$order->payment_complete();
-									$order->add_order_note( "Payment with Omise successful" );
+									$order->add_order_note( Omise_Util::translate( 'Payment with Omise successful' ) );
 								}
 
 								break;
@@ -283,7 +283,7 @@ function register_omise_wc_gateway_plugin() {
 						}
 
 						if ( ! $success )
-							throw new Exception( "This charge cannot authorize or capture, please contact our support." );
+							throw new Exception( Omise_Util::translate( 'This charge cannot authorize or capture, please contact our support.' ) );
 
 						// Remove cart
 						WC()->cart->empty_cart();
@@ -294,8 +294,8 @@ function register_omise_wc_gateway_plugin() {
 					}
 				} catch( Exception $e ) {
 					$error_message = $e->getMessage();
-					wc_add_notice( __( 'Payment error: ', 'woothemes' ) . $error_message , 'error' );
-					$order->add_order_note( 'Payment with Omise error: '. $error_message );
+					wc_add_notice( Omise_Util::translate( 'Payment error' ) . ': ' . $error_message, 'error' );
+					$order->add_order_note( Omise_Util::translate( 'Payment with Omise error' ) . ': ' . $error_message );
 					return array(
 						'result'   => 'fail',
 						'redirect' => ''
@@ -354,8 +354,8 @@ function register_omise_wc_gateway_plugin() {
 			 */
 			public function form_field_payment_actions() {
 				return array(
-					'auto_capture'   => __( "Auto Capture", $this->gateway_name ),
-					'manual_capture' => __( "Manual Capture", $this->gateway_name )
+					'auto_capture'   => Omise_Util::translate( 'Auto Capture', 'Setting auto capture' ),
+					'manual_capture' => Omise_Util::translate( 'Manual Capture', 'Setting manual capture' )
 				);
 			}
 		}
@@ -373,6 +373,10 @@ function register_omise_wc_gateway_plugin() {
 
 	add_filter( 'woocommerce_payment_gateways', 'add_omise_gateway' );
 	add_filter( 'woocommerce_order_actions', 'add_omise_capture_action' );
+
+	$locale = get_locale();
+	load_textdomain( 'omise-woocommerce', plugin_basename( dirname( __FILE__ ) ) . '/languages/' . $locale . '.mo' );
+	load_plugin_textdomain( 'omise-woocommerce', false, plugin_basename( dirname( __FILE__ ) ) . '/languages/' );
 }
 
 function register_omise_wc_gateway_post_type() {
